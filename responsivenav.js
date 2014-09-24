@@ -64,20 +64,33 @@
 				removeClass( nav, 'collapsed' );
 			},
 			
+			open: function () {
+				nav.querySelector( 'ul' ).style.height = this._calcHeight() + 'px';	
+				
+			},
+			
+			close: function () {
+				nav.querySelector( 'ul' ).removeAttribute( 'style' );
+			},
+			
 			// Private methods
 			_init: function () {
 				
 				var self = this;
 				
-				if ( self._isWrapped() )
-					self.collapse();
+				self._isWrapped() ?
+					self.collapse() :
+					self._resetHeight();
 					
 				
 				window.onresize = function () {
-					
-					if ( self._isWrapped() )
-						self.collapse();
+					self.expand();
+					self._isWrapped() ?
+						self.collapse() :
+						self._resetHeight();
 				};
+				
+				nav.querySelector( '.responsivenav__toggle' ).onclick = function () { self.open() };
 			},
 			
 			_addToggle: function () {
@@ -96,13 +109,29 @@
 				return width;
 			},
 			
+			_resetHeight: function () {
+				
+				
+				//nav.querySelector( 'ul' ).removeAttribute( 'style' );
+			},
+			
 			_calcHeight: function () {
 				
+				var children = nav.querySelectorAll( 'li' ),
+					height = 0;
+				
+				for (var i = 0; i < children.length; i++) {
+					height += children[i].offsetHeight;
+				}
+				
+				//nav.querySelector( 'ul' ).style.height = height + 'px';
+				
+				return height;
 			},
 			
 			_isWrapped: function () {
 				
-				var isWrapped = this._calcWidth() >= window.innerWidth ? true : false;
+				var isWrapped = this._calcWidth() >= nav.parentNode.offsetWidth ? true : false;
 				
 				//alert( this._calcWidth() );
 				/*

@@ -22,12 +22,20 @@
 			display: block;
 			margin-left: 0;
 		}
+		.responsivenav.collapsed .responsivenav__list {
+			height: 0;
+		}
+		
+		.responsivenav__list {
+			overflow: hidden;
+		}
 	</style>
 	
 </head>
 <body>
 	<nav class="responsivenav" data-rs-label="Menu">
-		<ul>
+		<a class="responsivenav__toggle">Menu</a>
+		<ul class="responsivenav__list">
 			<li><a href="index.html">Justo</a></li>
 			<li><a href="index.html">Inceptos</a></li>
 			<li><a href="index.html">Lorem</a></li>
