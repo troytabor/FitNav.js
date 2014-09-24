@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+
+	<style>
+		.responsivenav {
+			position: relative;
+		}
+		.responsivenav ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		.responsivenav ul li {
+			display: inline-block;
+			margin-left: -5px;
+		}
+		.responsivenav ul li a {
+			padding: 1em;
+		}
+		.responsivenav.collapsed ul li {
+			display: block;
+			margin-left: 0;
+		}
+	</style>
+	
+</head>
+<body>
+	<nav class="responsivenav" data-rs-label="Menu">
+		<ul>
+			<li><a href="index.html">Justo</a></li>
+			<li><a href="index.html">Inceptos</a></li>
+			<li><a href="index.html">Lorem</a></li>
+			<li><a href="index.html">Condimentum</a></li>
+			<li><a href="index.html">Cras</a></li>
+		</ul>
+	</nav>
+	<script src="responsivenav.js"></script>
+	<script>
+		var nav = responsiveNav('.responsivenav');
+	</script>
+</body>
+</html>
