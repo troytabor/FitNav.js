@@ -3,6 +3,17 @@
 <head>
 
 	<style>
+		body {
+			font-family: sans-serif;
+			-webkit-font-smoothing: antialiased;
+			-webkit-user-select: none;
+		}
+		a {
+			text-decoration: none;
+			color: inherit;
+		}
+		
+		
 		.responsivenav {
 			position: relative;
 		}
@@ -10,13 +21,20 @@
 			list-style: none;
 			margin: 0;
 			padding: 0;
+			
+			background-color: #aaa;
+			color: #333;
 		}
 		.responsivenav ul li {
 			display: inline-block;
 			margin-left: -5px;
 		}
+		.responsivenav ul li:first-child {
+			margin-left: 0;
+		}
 		.responsivenav ul li a {
-			padding: 1em;
+			display: block;
+			padding: 0.5em;
 		}
 		.responsivenav.collapsed ul li {
 			display: block;
@@ -24,10 +42,14 @@
 		}
 		.responsivenav.collapsed .responsivenav__list {
 			height: 0;
+			
+			
+			text-align: center;
 		}
 		
 		.responsivenav__list {
 			overflow: hidden;
+			transition: 0.4s ease height;
 		}
 		
 		.responsivenav__toggle {
@@ -36,7 +58,14 @@
 		
 		.responsivenav.collapsed .responsivenav__toggle {
 			display: block;
+			padding: 0.5em;
+			
+			
+			background-color: #aaa;
+			color: #333;
+			text-align: center;
 		}
+		
 	</style>
 	
 </head>

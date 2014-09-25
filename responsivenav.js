@@ -14,7 +14,8 @@
 			el.className = el.className.replace(reg, " ").replace(/(^\s*)|(\s*$)/g,"");
 		};
 		
-		var nav;
+		var nav,
+			navList;
 
 		var ResponsiveNav = function (el, options) {
 		
@@ -46,6 +47,7 @@
 			}
 			
 			nav = this.wrapper;
+			navList = nav.querySelector( '.responsivenav__list' );
 			
 			// Init
 			this._init(this);
@@ -62,15 +64,25 @@
 			
 			expand: function () {
 				removeClass( nav, 'collapsed' );
+				//navList.style.height = 'auto';
 			},
 			
 			open: function () {
-				nav.querySelector( 'ul' ).style.height = this._calcHeight() + 'px';	
+				navList.style.height = this._calcHeight() + 'px';	
 				
 			},
 			
 			close: function () {
-				nav.querySelector( 'ul' ).removeAttribute( 'style' );
+				navList.removeAttribute( 'style' );
+			},
+			
+			toggle: function () {
+				if ( navList.offsetHeight > 0 ) {
+					this.close();
+				}
+				else {
+					this.open();
+				}
 			},
 			
 			// Private methods
@@ -90,7 +102,7 @@
 						self._resetHeight();
 				};
 				
-				nav.querySelector( '.responsivenav__toggle' ).onclick = function () { self.open() };
+				nav.querySelector( '.responsivenav__toggle' ).onclick = function () { self.toggle() };
 			},
 			
 			_addToggle: function () {
@@ -103,7 +115,7 @@
 					width = 0;
 				
 				for (var i = 0; i < children.length; i++) {
-					width += parseInt( children[i].offsetWidth, 10 );
+					width += children[i].offsetWidth;
 				}
 				
 				return width;
