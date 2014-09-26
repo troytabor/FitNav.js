@@ -13,6 +13,10 @@
 			color: inherit;
 		}
 		
+		.padded {
+			padding: 1em;
+		}
+		
 		
 		.collapsenav {
 			position: relative;
@@ -70,7 +74,7 @@
 	
 </head>
 <body>
-	<nav class="collapsenav" data-rs-label="Menu">
+	<nav id="collapsenav-one" class="collapsenav" data-rs-label="Menu">
 		<a class="collapsenav__toggle">Menu</a>
 		<ul class="collapsenav__list">
 			<li><a href="#1">Justo</a></li>
@@ -80,9 +84,24 @@
 			<li><a href="index.html">Cras</a></li>
 		</ul>
 	</nav>
+	
+	<div class="padded">
+		<nav id="collapsenav-two" class="collapsenav" data-rs-label="Menu">
+			<a class="collapsenav__toggle">Menu</a>
+			<ul class="collapsenav__list">
+				<li><a href="#1">Justo</a></li>
+				<li><a href="#2">Inceptos</a></li>
+				<li><a href="index.html">Lorem</a></li>
+				<li><a href="index.html">Condimentum</a></li>
+				<li><a href="index.html">Cras</a></li>
+			</ul>
+		</nav>
+	</div>
+	
 	<script src="collapsenav.js"></script>
 	<script>
-		var nav = collapseNav('.collapsenav');
+		var navOne = collapseNav('#collapsenav-one');
+		var navTwo = collapseNav('#collapsenav-two');
 	</script>
 </body>
 </html>

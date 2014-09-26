@@ -252,6 +252,17 @@
 				return width;
 			},
 			
+			_calcParentWidth: function () {
+				var clientWidth = nav.parentNode.clientWidth,
+					computedStyle = window.getComputedStyle( nav.parentNode ),
+					paddingLeft = parseInt( computedStyle.getPropertyValue( 'padding-left' ), 10 ),
+					paddingRight = parseInt( computedStyle.getPropertyValue( 'padding-right' ), 10 ),
+					width = clientWidth - paddingLeft - paddingRight;
+				
+				return width;
+					
+			},
+			
 			_resetHeight: function () {
 				
 				navList.removeAttribute( 'style' );
@@ -271,7 +282,7 @@
 			
 			_isWrapped: function () {
 				
-				var isWrapped = this._calcWidth() >= nav.parentNode.offsetWidth ? true : false;
+				var isWrapped = this._calcWidth() >= this._calcParentWidth() ? true : false;
 				
 				return isWrapped;
 					
