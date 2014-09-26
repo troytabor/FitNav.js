@@ -1,8 +1,60 @@
 (function (document, window, index) {
 	
-	var responsiveNav = function (el, options) {
+	var responsiveNav = function ( el, options ) {
 		
-		var addClass = function (el, cls) {
+		var addEvent = function (el, evt, fn, bubble) {
+			if ("addEventListener" in el) {
+				// BBOS6 doesn't support handleEvent, catch and polyfill
+				try {
+					el.addEventListener(evt, fn, bubble);
+				} catch (e) {
+					if (typeof fn === "object" && fn.handleEvent) {
+						el.addEventListener(evt, function (e) {
+							// Bind fn as this and set first arg as event object
+							fn.handleEvent.call(fn, e);
+						}, bubble);
+					} else {
+						throw e;
+					}
+				}
+			} else if ("attachEvent" in el) {
+				// check if the callback is an object and contains handleEvent
+				if (typeof fn === "object" && fn.handleEvent) {
+					el.attachEvent("on" + evt, function () {
+						// Bind fn as this
+						fn.handleEvent.call(fn);
+					});
+				} else {
+					el.attachEvent("on" + evt, fn);
+				}
+			}
+		},
+		
+		removeEvent = function (el, evt, fn, bubble) {
+			if ("removeEventListener" in el) {
+				try {
+					el.removeEventListener(evt, fn, bubble);
+				} catch (e) {
+					if (typeof fn === "object" && fn.handleEvent) {
+						el.removeEventListener(evt, function (e) {
+							fn.handleEvent.call(fn, e);
+						}, bubble);
+					} else {
+						throw e;
+					}
+				}
+			} else if ("detachEvent" in el) {
+				if (typeof fn === "object" && fn.handleEvent) {
+					el.detachEvent("on" + evt, function () {
+						fn.handleEvent.call(fn);
+					});
+				} else {
+					el.detachEvent("on" + evt, fn);
+				}
+			}
+		},
+		
+		addClass = function (el, cls) {
 			if (el.className.indexOf(cls) !== 0) {
 				el.className += " " + cls;
 				el.className = el.className.replace(/(^\s*)|(\s*$)/g,"");
@@ -12,42 +64,52 @@
 		removeClass = function (el, cls) {
 			var reg = new RegExp("(\\s|^)" + cls + "(\\s|$)");
 			el.className = el.className.replace(reg, " ").replace(/(^\s*)|(\s*$)/g,"");
+		},
+		
+		// forEach method that passes back the stuff we need
+		forEach = function (array, callback, scope) {
+			for ( var i = 0; i < array.length; i++ ) {
+				callback.call( scope, i, array[i] );
+			}
 		};
 		
 		var nav,
-			navList;
+			navList,
+			navToggle,
+			isCollapsed;
 
-		var ResponsiveNav = function (el, options) {
+		var ResponsiveNav = function ( el, options ) {
 		
 			var i;
 	
 			// Default options
-			this.options = {  // Function: Close callback
+			this.options = {	 // Function: Close callback
 			};
 	
 			// User defined options
 			for (i in options) {
-			  this.options[i] = options[i];
+				 this.options[i] = options[i];
 			}
 			
 			// Wrapper
-			this.wrapperEl = el.replace("#", "");
+			this.wrapperEl = el.replace( '#', '' );
 			
 			// Try selecting ID first
-			if (document.getElementById(this.wrapperEl)) {
-				this.wrapper = document.getElementById(this.wrapperEl);
+			if (document.getElementById( this.wrapperEl )) {
+				this.wrapper = document.getElementById( this.wrapperEl );
 			
 			// If element with an ID doesn't exist, use querySelector
-			} else if (document.querySelector(this.wrapperEl)) {
-				this.wrapper = document.querySelector(this.wrapperEl);
+			} else if ( document.querySelector( this.wrapperEl ) ) {
+				this.wrapper = document.querySelector( this.wrapperEl );
 			
 			// If element doesn't exists, stop here.
 			} else {
-				throw new Error("The nav element you are trying to select doesn't exist");
+				throw new Error( 'The element you are trying to select does not exist' );
 			}
 			
 			nav = this.wrapper;
 			navList = nav.querySelector( '.responsivenav__list' );
+			navToggle = nav.querySelector( '.responsivenav__toggle' );
 			
 			// Init
 			this._init(this);
@@ -56,14 +118,38 @@
 		ResponsiveNav.prototype = {
 			
 			// Public methods
-			destroy: function () {},
+			destroy: function () {
+				removeEvent( window, 'resize', this, false );
+				
+				removeEvent( navToggle, 'click', this, false );
+				
+				if ( 'querySelectorAll' in document ) {
+					var links = navList.querySelectorAll("a"),
+						self = this;
+					
+					forEach(links, function (i, el) {
+						removeEvent(links[i], "click", function (e) {
+							e.preventDefault();
+							e.stopPropagation();
+							if (isCollapsed) {
+								self.toggle();
+								setTimeout( function () {
+									window.location = links[i].href;
+								}, 400);
+							}
+						}, false);
+					});
+				}
+			},
 			
 			collapse: function () {
 				addClass( nav, 'collapsed' );
+				isCollapsed = true;
 			},
 			
 			expand: function () {
 				removeClass( nav, 'collapsed' );
+				isCollapsed = false;
 				//navList.style.height = 'auto';
 			},
 			
@@ -85,6 +171,32 @@
 				}
 			},
 			
+			resize: function (e) {
+				this.expand();
+				this._isWrapped() ?
+					this.collapse() :
+					this._resetHeight();
+			},
+			
+			handleEvent: function (e) {
+				var evt = e || window.event;
+				
+				switch (evt.type) {
+					case "click":
+						this._preventDefault(evt);
+						if ( evt.target == navToggle ) {
+							this.toggle();
+						}
+						break;
+					case "keyup":
+						this._onKeyUp(evt);
+						break;
+					case "resize":
+						this.resize(evt);
+						break;
+				}
+			},
+			
 			// Private methods
 			_init: function () {
 				
@@ -93,16 +205,13 @@
 				self._isWrapped() ?
 					self.collapse() :
 					self._resetHeight();
+				
+				this._closeOnNavClick();
 					
+				addEvent( window, 'resize', this, false );
 				
-				window.onresize = function () {
-					self.expand();
-					self._isWrapped() ?
-						self.collapse() :
-						self._resetHeight();
-				};
+				addEvent( navToggle, 'click', this, false );
 				
-				nav.querySelector( '.responsivenav__toggle' ).onclick = function () { self.toggle() };
 			},
 			
 			_addToggle: function () {
@@ -123,8 +232,7 @@
 			
 			_resetHeight: function () {
 				
-				
-				//nav.querySelector( 'ul' ).removeAttribute( 'style' );
+				navList.removeAttribute( 'style' );
 			},
 			
 			_calcHeight: function () {
@@ -132,11 +240,9 @@
 				var children = nav.querySelectorAll( 'li' ),
 					height = 0;
 				
-				for (var i = 0; i < children.length; i++) {
+				for ( var i = 0; i < children.length; i++ ) {
 					height += children[i].offsetHeight;
 				}
-				
-				//nav.querySelector( 'ul' ).style.height = height + 'px';
 				
 				return height;
 			},
@@ -145,15 +251,37 @@
 				
 				var isWrapped = this._calcWidth() >= nav.parentNode.offsetWidth ? true : false;
 				
-				//alert( this._calcWidth() );
-				/*
-				var wrapperHeight = nav.offsetHeight,
-					liHeight = nav.querySelector( 'li' ).offsetHeight
-					isWrapped = wrapperHeight >= liHeight*2 ? true : false;
-				*/
-				
 				return isWrapped;
 					
+			},
+			
+			_preventDefault: function(e) {
+				if ( e.preventDefault ) {
+					e.preventDefault();
+					e.stopPropagation();
+				} else {
+					e.returnValue = false;
+				}
+			},
+			
+			_closeOnNavClick: function () {
+				if ( 'querySelectorAll' in document ) {
+					var links = navList.querySelectorAll("a"),
+						self = this;
+					
+					forEach(links, function (i, el) {
+						addEvent(links[i], "click", function (e) {
+							e.preventDefault();
+							e.stopPropagation();
+							if (isCollapsed) {
+								self.toggle();
+								setTimeout( function () {
+									window.location = links[i].href;
+								}, 400);
+							}
+						}, false);
+					});
+				}
 			}
 			
 		};
@@ -161,7 +289,7 @@
 		return new ResponsiveNav(el, options);
 	
 	};
-		  
+			
 		
 	window.responsiveNav = responsiveNav;
 		
