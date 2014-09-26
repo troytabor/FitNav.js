@@ -1,2 +1,2 @@
-Collapse Nav
+FitNav
 =============
