@@ -244,9 +244,11 @@
 				
 				var children = nav.querySelectorAll( 'li' ),
 					width = 0;
+					space = ( children[1].getBoundingClientRect().left - children[0].getBoundingClientRect().left ) - children[0].offsetWidth;
 				
 				for (var i = 0; i < children.length; i++) {
 					width += children[i].offsetWidth;
+					width += space;
 				}
 				
 				return width;
