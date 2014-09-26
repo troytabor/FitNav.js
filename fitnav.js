@@ -1,4 +1,11 @@
-(function (document, window, index) {
+/*! FitNav.js 1.0
+ * https://github.com/stephansmith/FitNav.js
+ *
+ * Copyright (c) 2014 @_stpehansmith
+ * Available under the MIT license
+ */
+ 
+ (function (document, window, index) {
 	
 	var fitNav = function ( el, options ) {
 		
