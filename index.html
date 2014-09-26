@@ -14,10 +14,10 @@
 		}
 		
 		
-		.responsivenav {
+		.collapsenav {
 			position: relative;
 		}
-		.responsivenav ul {
+		.collapsenav ul {
 			list-style: none;
 			margin: 0;
 			padding: 0;
@@ -25,38 +25,38 @@
 			background-color: #aaa;
 			color: #333;
 		}
-		.responsivenav ul li {
+		.collapsenav ul li {
 			display: inline-block;
 			margin-left: -5px;
 		}
-		.responsivenav ul li:first-child {
+		.collapsenav ul li:first-child {
 			margin-left: 0;
 		}
-		.responsivenav ul li a {
+		.collapsenav ul li a {
 			display: block;
 			padding: 0.5em;
 		}
-		.responsivenav.collapsed ul li {
+		.collapsenav.collapsed ul li {
 			display: block;
 			margin-left: 0;
 		}
-		.responsivenav.collapsed .responsivenav__list {
+		.collapsenav.collapsed .collapsenav__list {
 			height: 0;
 			
 			
 			text-align: center;
 		}
 		
-		.responsivenav__list {
+		.collapsenav__list {
 			overflow: hidden;
 			transition: 0.4s ease height;
 		}
 		
-		.responsivenav__toggle {
+		.collapsenav__toggle {
 			display: none;
 		}
 		
-		.responsivenav.collapsed .responsivenav__toggle {
+		.collapsenav.collapsed .collapsenav__toggle {
 			display: block;
 			padding: 0.5em;
 			
@@ -70,9 +70,9 @@
 	
 </head>
 <body>
-	<nav class="responsivenav" data-rs-label="Menu">
-		<a class="responsivenav__toggle">Menu</a>
-		<ul class="responsivenav__list">
+	<nav class="collapsenav" data-rs-label="Menu">
+		<a class="collapsenav__toggle">Menu</a>
+		<ul class="collapsenav__list">
 			<li><a href="#1">Justo</a></li>
 			<li><a href="#2">Inceptos</a></li>
 			<li><a href="index.html">Lorem</a></li>
@@ -82,7 +82,7 @@
 	</nav>
 	<script src="collapsenav.js"></script>
 	<script>
-		var nav = collapseNav('.responsivenav');
+		var nav = collapseNav('.collapsenav');
 	</script>
 </body>
 </html>

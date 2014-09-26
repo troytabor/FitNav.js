@@ -108,8 +108,8 @@
 			}
 			
 			nav = this.wrapper;
-			navList = nav.querySelector( '.responsivenav__list' );
-			navToggle = nav.querySelector( '.responsivenav__toggle' );
+			navList = nav.querySelector( '.collapsenav__list' );
+			navToggle = nav.querySelector( '.collapsenav__toggle' );
 			
 			// Init
 			this._init(this);
