@@ -8,48 +8,25 @@
 	
 </head>
 <body>
+
+	<h1>FitNav.js</h1>
+	
+	<p>FitNav automatically collapses site menus into nifty mobile menus when they&rsquo;ve outgrown their containers. Developed primarily for CMS driven sites, FitNav allows menus remain responsive even when </p>
+
 	<nav id="fitnav-one" class="fitnav" data-rs-label="Menu">
 		<a class="fitnav__toggle">Menu</a>
 		<ul class="fitnav__list">
-			<li><a href="#1">Justo</a></li>
-			<li><a href="#2">Inceptos</a></li>
-			<li><a href="index.html">Lorem</a></li>
-			<li><a href="index.html">Condimentum</a></li>
-			<li><a href="index.html">Cras</a></li>
+			<li><a href="#">Justo</a></li>
+			<li><a href="#">Inceptos</a></li>
+			<li><a href="#">Lorem</a></li>
+			<li><a href="#">Condimentum</a></li>
+			<li><a href="#">Cras</a></li>
 		</ul>
 	</nav>
 	
-	<div class="padded">
-		<nav id="fitnav-two" class="fitnav" data-rs-label="Menu">
-			<a class="fitnav__toggle">Menu</a>
-			<ul class="fitnav__list">
-				<li><a href="#1">Justo</a></li>
-				<li><a href="#2">Inceptos</a></li>
-				<li><a href="index.html">Lorem</a></li>
-				<li><a href="index.html">Condimentum</a></li>
-				<li><a href="index.html">Cras</a></li>
-			</ul>
-		</nav>
-	</div>
-	
-	<div class="padded">
-		<nav id="fitnav-three" class="fitnav" data-rs-label="Menu">
-			<a class="fitnav__toggle">Menu</a>
-			<ul class="fitnav__list">
-				<li><a href="#1">Justo</a></li>
-				<li><a href="#2">Inceptos</a></li>
-				<li><a href="index.html">Lorem</a></li>
-				<li><a href="index.html">Condimentum</a></li>
-				<li style="margin-left: 1em"><a href="index.html">Cras</a></li>
-			</ul>
-		</nav>
-	</div>
-	
 	<script src="fitnav.js"></script>
 	<script>
-		var navOne = fitNav('#fitnav-one');
-		var navTwo = fitNav('#fitnav-two');
-		var navThree = fitNav('#fitnav-three');
+		var navOne = fitNav('.fitnav');
 	</script>
 </body>
 </html>
