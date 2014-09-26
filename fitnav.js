@@ -10,8 +10,8 @@
 				this.el = el;
 				this.getPropertyValue = function(prop) {
 					var re = /(\-([a-z]){1})/g;
-					if (prop === "float") {
-						prop = "styleFloat";
+					if (prop === 'float') {
+						prop = 'styleFloat';
 					}
 					if (re.test(prop)) {
 						prop = prop.replace(re, function () {
@@ -25,12 +25,12 @@
 		}
 		
 		var addEvent = function (el, evt, fn, bubble) {
-			if ("addEventListener" in el) {
+			if ('addEventListener' in el) {
 				// BBOS6 doesn't support handleEvent, catch and polyfill
 				try {
 					el.addEventListener(evt, fn, bubble);
 				} catch (e) {
-					if (typeof fn === "object" && fn.handleEvent) {
+					if (typeof fn === 'object' && fn.handleEvent) {
 						el.addEventListener(evt, function (e) {
 							// Bind fn as this and set first arg as event object
 							fn.handleEvent.call(fn, e);
@@ -39,25 +39,25 @@
 						throw e;
 					}
 				}
-			} else if ("attachEvent" in el) {
+			} else if ('attachEvent' in el) {
 				// check if the callback is an object and contains handleEvent
-				if (typeof fn === "object" && fn.handleEvent) {
-					el.attachEvent("on" + evt, function () {
+				if (typeof fn === 'object' && fn.handleEvent) {
+					el.attachEvent('on' + evt, function () {
 						// Bind fn as this
 						fn.handleEvent.call(fn);
 					});
 				} else {
-					el.attachEvent("on" + evt, fn);
+					el.attachEvent('on' + evt, fn);
 				}
 			}
 		},
 		
 		removeEvent = function (el, evt, fn, bubble) {
-			if ("removeEventListener" in el) {
+			if ('removeEventListener' in el) {
 				try {
 					el.removeEventListener(evt, fn, bubble);
 				} catch (e) {
-					if (typeof fn === "object" && fn.handleEvent) {
+					if (typeof fn === 'object' && fn.handleEvent) {
 						el.removeEventListener(evt, function (e) {
 							fn.handleEvent.call(fn, e);
 						}, bubble);
@@ -65,27 +65,27 @@
 						throw e;
 					}
 				}
-			} else if ("detachEvent" in el) {
-				if (typeof fn === "object" && fn.handleEvent) {
-					el.detachEvent("on" + evt, function () {
+			} else if ('detachEvent' in el) {
+				if (typeof fn === 'object' && fn.handleEvent) {
+					el.detachEvent('on' + evt, function () {
 						fn.handleEvent.call(fn);
 					});
 				} else {
-					el.detachEvent("on" + evt, fn);
+					el.detachEvent('on' + evt, fn);
 				}
 			}
 		},
 		
 		addClass = function (el, cls) {
 			if (el.className.indexOf(cls) !== 0) {
-				el.className += " " + cls;
-				el.className = el.className.replace(/(^\s*)|(\s*$)/g,"");
+				el.className += ' ' + cls;
+				el.className = el.className.replace(/(^\s*)|(\s*$)/g,'');
 			}
 		},
 		
 		removeClass = function (el, cls) {
-			var reg = new RegExp("(\\s|^)" + cls + "(\\s|$)");
-			el.className = el.className.replace(reg, " ").replace(/(^\s*)|(\s*$)/g,"");
+			var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+			el.className = el.className.replace(reg, ' ').replace(/(^\s*)|(\s*$)/g,'');
 		},
 		
 		// forEach method that passes back the stuff we need
@@ -107,7 +107,8 @@
 			// Default options
 			this.options = {	 // Function: Close callback
 				navToggleSelector: '.fitnav__toggle',
-				navListSelector: '.fitnav__list'
+				navListSelector: '.fitnav__list',
+				navCollapsedClass: 'collapsed'
 			};
 	
 			// User defined options
@@ -148,11 +149,11 @@
 				removeEvent( navToggle, 'click', this, false );
 				
 				if ( 'querySelectorAll' in document ) {
-					var links = navList.querySelectorAll("a"),
+					var links = navList.querySelectorAll('a'),
 						self = this;
 					
 					forEach(links, function (i, el) {
-						removeEvent(links[i], "click", function (e) {
+						removeEvent(links[i], 'click', function (e) {
 							e.preventDefault();
 							e.stopPropagation();
 							if (isCollapsed) {
@@ -167,12 +168,12 @@
 			},
 			
 			collapse: function () {
-				addClass( nav, 'collapsed' );
+				addClass( nav, this.options.navCollapsedClass );
 				isCollapsed = true;
 			},
 			
 			expand: function () {
-				removeClass( nav, 'collapsed' );
+				removeClass( nav, this.options.navCollapsedClass );
 				isCollapsed = false;
 				//navList.style.height = 'auto';
 			},
@@ -206,16 +207,16 @@
 				var evt = e || window.event;
 				
 				switch (evt.type) {
-					case "click":
+					case 'click':
 						this._preventDefault(evt);
 						if ( evt.target == navToggle ) {
 							this.toggle();
 						}
 						break;
-					case "keyup":
+					case 'keyup':
 						this._onKeyUp(evt);
 						break;
-					case "resize":
+					case 'resize':
 						this.resize(evt);
 						break;
 				}
@@ -306,11 +307,11 @@
 			
 			_closeOnNavClick: function () {
 				if ( 'querySelectorAll' in document ) {
-					var links = navList.querySelectorAll("a"),
+					var links = navList.querySelectorAll('a'),
 						self = this;
 					
 					forEach(links, function (i, el) {
-						addEvent(links[i], "click", function (e) {
+						addEvent(links[i], 'click', function (e) {
 							e.preventDefault();
 							e.stopPropagation();
 							if (isCollapsed) {
