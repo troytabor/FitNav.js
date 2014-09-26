@@ -1,6 +1,6 @@
 (function (document, window, index) {
 	
-	var responsiveNav = function ( el, options ) {
+	var collapseNav = function ( el, options ) {
 		
 		var addEvent = function (el, evt, fn, bubble) {
 			if ("addEventListener" in el) {
@@ -78,7 +78,7 @@
 			navToggle,
 			isCollapsed;
 
-		var ResponsiveNav = function ( el, options ) {
+		var CollapseNav = function ( el, options ) {
 		
 			var i;
 	
@@ -115,7 +115,7 @@
 			this._init(this);
 		};
 		
-		ResponsiveNav.prototype = {
+		CollapseNav.prototype = {
 			
 			// Public methods
 			destroy: function () {
@@ -286,12 +286,12 @@
 			
 		};
 			
-		return new ResponsiveNav(el, options);
+		return new CollapseNav(el, options);
 	
 	};
 			
 		
-	window.responsiveNav = responsiveNav;
+	window.collapseNav = collapseNav;
 		
 
 }(document, window, 0));
