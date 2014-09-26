@@ -1,0 +1,51 @@
+.fitnav {
+	position: relative;
+}
+
+.fitnav__list {
+	overflow: hidden;
+	transition: 0.4s ease height;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	white-space: nowrap;
+	
+	
+	background-color: #aaa;
+	color: #333;
+}
+
+.fitnav__list li {
+	display: inline-block;
+}
+.fitnav__list li:first-child {
+	margin-left: 0;
+}
+.fitnav__list li a {
+	display: block;
+	padding: 0.5em;
+}
+.fitnav.collapsed .fitnav__list li {
+	display: block;
+	margin-left: 0;
+}
+.fitnav.collapsed .fitnav__list {
+	height: 0;
+	
+	
+	text-align: center;
+}
+
+.fitnav__toggle {
+	display: none;
+}
+
+.fitnav.collapsed .fitnav__toggle {
+	display: block;
+	padding: 0.5em;
+	
+	
+	background-color: #aaa;
+	color: #333;
+	text-align: center;
+}

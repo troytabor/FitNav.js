@@ -1,0 +1,16 @@
+body {
+			font-family: sans-serif;
+			-webkit-font-smoothing: antialiased;
+			-webkit-user-select: none;
+		}
+		a {
+			text-decoration: none;
+			color: inherit;
+		}
+		
+		
+		
+		
+		.padded {
+			padding: 1em;
+		}
