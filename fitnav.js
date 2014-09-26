@@ -1,6 +1,6 @@
 (function (document, window, index) {
 	
-	var collapseNav = function ( el, options ) {
+	var fitNav = function ( el, options ) {
 		
 		var computed = !!window.getComputedStyle;
 		
@@ -100,12 +100,14 @@
 			navToggle,
 			isCollapsed;
 
-		var CollapseNav = function ( el, options ) {
+		var FitNav = function ( el, options ) {
 		
 			var i;
 	
 			// Default options
 			this.options = {	 // Function: Close callback
+				navToggleSelector: '.fitnav__toggle',
+				navListSelector: '.fitnav__list'
 			};
 	
 			// User defined options
@@ -130,14 +132,14 @@
 			}
 			
 			nav = this.wrapper;
-			navList = nav.querySelector( '.collapsenav__list' );
-			navToggle = nav.querySelector( '.collapsenav__toggle' );
+			navList = nav.querySelector( this.options.navListSelector );
+			navToggle = nav.querySelector( this.options.navToggleSelector );
 			
 			// Init
 			this._init(this);
 		};
 		
-		CollapseNav.prototype = {
+		FitNav.prototype = {
 			
 			// Public methods
 			destroy: function () {
@@ -254,8 +256,6 @@
 					
 				}
 				
-				navList.setAttribute( 'data-width', width );
-				
 				return width;
 			},
 			
@@ -326,12 +326,12 @@
 			
 		};
 			
-		return new CollapseNav(el, options);
+		return new FitNav(el, options);
 	
 	};
 			
 		
-	window.collapseNav = collapseNav;
+	window.fitNav = fitNav;
 		
 
 }(document, window, 0));

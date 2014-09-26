@@ -13,54 +13,50 @@
 			color: inherit;
 		}
 		
-		.padded {
-			padding: 1em;
-		}
 		
-		
-		.collapsenav {
+		.fitnav {
 			position: relative;
 		}
-		.collapsenav ul {
+		
+		.fitnav__list {
+			overflow: hidden;
+			transition: 0.4s ease height;
 			list-style: none;
 			margin: 0;
 			padding: 0;
 			white-space: nowrap;
 			
+			
 			background-color: #aaa;
 			color: #333;
 		}
-		.collapsenav ul li {
+		
+		.fitnav__list li {
 			display: inline-block;
 		}
-		.collapsenav ul li:first-child {
+		.fitnav__list li:first-child {
 			margin-left: 0;
 		}
-		.collapsenav ul li a {
+		.fitnav__list li a {
 			display: block;
 			padding: 0.5em;
 		}
-		.collapsenav.collapsed ul li {
+		.fitnav.collapsed .fitnav__list li {
 			display: block;
 			margin-left: 0;
 		}
-		.collapsenav.collapsed .collapsenav__list {
+		.fitnav.collapsed .fitnav__list {
 			height: 0;
 			
 			
 			text-align: center;
 		}
 		
-		.collapsenav__list {
-			overflow: hidden;
-			transition: 0.4s ease height;
-		}
-		
-		.collapsenav__toggle {
+		.fitnav__toggle {
 			display: none;
 		}
 		
-		.collapsenav.collapsed .collapsenav__toggle {
+		.fitnav.collapsed .fitnav__toggle {
 			display: block;
 			padding: 0.5em;
 			
@@ -70,13 +66,17 @@
 			text-align: center;
 		}
 		
+		.padded {
+			padding: 1em;
+		}
+		
 	</style>
 	
 </head>
 <body>
-	<nav id="collapsenav-one" class="collapsenav" data-rs-label="Menu">
-		<a class="collapsenav__toggle">Menu</a>
-		<ul class="collapsenav__list">
+	<nav id="fitnav-one" class="fitnav" data-rs-label="Menu">
+		<a class="fitnav__toggle">Menu</a>
+		<ul class="fitnav__list">
 			<li><a href="#1">Justo</a></li>
 			<li><a href="#2">Inceptos</a></li>
 			<li><a href="index.html">Lorem</a></li>
@@ -86,9 +86,9 @@
 	</nav>
 	
 	<div class="padded">
-		<nav id="collapsenav-two" class="collapsenav" data-rs-label="Menu">
-			<a class="collapsenav__toggle">Menu</a>
-			<ul class="collapsenav__list">
+		<nav id="fitnav-two" class="fitnav" data-rs-label="Menu">
+			<a class="fitnav__toggle">Menu</a>
+			<ul class="fitnav__list">
 				<li><a href="#1">Justo</a></li>
 				<li><a href="#2">Inceptos</a></li>
 				<li><a href="index.html">Lorem</a></li>
@@ -99,9 +99,9 @@
 	</div>
 	
 	<div class="padded">
-		<nav id="collapsenav-three" class="collapsenav" data-rs-label="Menu">
-			<a class="collapsenav__toggle">Menu</a>
-			<ul class="collapsenav__list">
+		<nav id="fitnav-three" class="fitnav" data-rs-label="Menu">
+			<a class="fitnav__toggle">Menu</a>
+			<ul class="fitnav__list">
 				<li><a href="#1">Justo</a></li>
 				<li><a href="#2">Inceptos</a></li>
 				<li><a href="index.html">Lorem</a></li>
@@ -111,11 +111,11 @@
 		</nav>
 	</div>
 	
-	<script src="collapsenav.js"></script>
+	<script src="fitnav.js"></script>
 	<script>
-		var navOne = collapseNav('#collapsenav-one');
-		var navTwo = collapseNav('#collapsenav-two');
-		var navThree = collapseNav('#collapsenav-three');
+		var navOne = fitNav('#fitnav-one');
+		var navTwo = fitNav('#fitnav-two');
+		var navThree = fitNav('#fitnav-three');
 	</script>
 </body>
 </html>
