@@ -25,6 +25,7 @@
 			list-style: none;
 			margin: 0;
 			padding: 0;
+			white-space: nowrap;
 			
 			background-color: #aaa;
 			color: #333;
@@ -97,10 +98,24 @@
 		</nav>
 	</div>
 	
+	<div class="padded">
+		<nav id="collapsenav-three" class="collapsenav" data-rs-label="Menu">
+			<a class="collapsenav__toggle">Menu</a>
+			<ul class="collapsenav__list">
+				<li><a href="#1">Justo</a></li>
+				<li><a href="#2">Inceptos</a></li>
+				<li><a href="index.html">Lorem</a></li>
+				<li><a href="index.html">Condimentum</a></li>
+				<li style="margin-left: 1em"><a href="index.html">Cras</a></li>
+			</ul>
+		</nav>
+	</div>
+	
 	<script src="collapsenav.js"></script>
 	<script>
 		var navOne = collapseNav('#collapsenav-one');
 		var navTwo = collapseNav('#collapsenav-two');
+		var navThree = collapseNav('#collapsenav-three');
 	</script>
 </body>
 </html>

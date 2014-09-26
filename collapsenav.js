@@ -244,12 +244,17 @@
 				
 				var children = nav.querySelectorAll( 'li' ),
 					width = 0;
-					space = ( children[1].getBoundingClientRect().left - children[0].getBoundingClientRect().left ) - children[0].offsetWidth;
 				
-				for (var i = 0; i < children.length; i++) {
+				for ( var i = 0; i < children.length; i++ ) {
 					width += children[i].offsetWidth;
-					width += space;
+					
+					if ( i > 0 ) {
+						width += children[i].getBoundingClientRect().left - ( children[i-1].getBoundingClientRect().left + children[i-1].offsetWidth );
+					}
+					
 				}
+				
+				navList.setAttribute( 'data-width', width );
 				
 				return width;
 			},
