@@ -1,2 +1,2 @@
-FitNav
+FitNav.js
 =============
