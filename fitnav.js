@@ -326,7 +326,9 @@
 								setTimeout( function () {
 									window.location = links[i].href;
 								}, 400);
+								return;
 							}
+							window.location = links[i].href;
 						}, false);
 					});
 				}
